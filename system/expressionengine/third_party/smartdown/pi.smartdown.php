@@ -25,27 +25,13 @@ $plugin_info = array(
 
 
 class Smartdown {
-  
+
   public $return_data = '';
-  
-  
+
+
   /* --------------------------------------------------------------
    * PUBLIC METHODS
    * ------------------------------------------------------------ */
-  
-  /**
-   * PHP 4 constructor. Still required, as of EE 2.1.3.
-   *
-   * @see     __construct
-   * @access  public
-   * @param   string      $tagdata    The tagdata to process.
-   * @return  void
-   */
-  public function Smartdown($tagdata = '')
-  {
-    $this->__construct($tagdata);
-  }
-
 
   /**
    * Constructor.
@@ -150,7 +136,7 @@ class Smartdown {
         $tagdata
       );
     }
-    
+
     // SmartyPants.
     if ( ! $settings['disable:smartypants'])
     {
@@ -193,7 +179,7 @@ Example usage:
     {exp:smartdown}
 
         Stuff I really need to get done:
-        
+
         * Finish SmartDown
         * Release SmartDown
         * Deal with flurry of SmartDown support requests
@@ -210,21 +196,21 @@ Example usage:
 : Set to `yes` to disable SmartyPants. Default is `no`.
 
 `ee_tags:encode`
-: Set to `yes`, to convert the curly braces for all EE tags and variables into 
+: Set to `yes`, to convert the curly braces for all EE tags and variables into
 entities. Default is `no`.
 
 `smart_quotes`
-: Fine-grained control over SmartyPants' handling of smart quotes. Will never be 
-used by 99% of you. Nosey types should take a look at the SmartyPants source 
+: Fine-grained control over SmartyPants' handling of smart quotes. Will never be
+used by 99% of you. Nosey types should take a look at the SmartyPants source
 code.
 
 ## Fieldtype parameters ##
-The SmartDown fieldtype may be configured using `config.php`. This makes it 
-possible to set any of the supported SmartDown parameters directly in the 
+The SmartDown fieldtype may be configured using `config.php`. This makes it
+possible to set any of the supported SmartDown parameters directly in the
 fieldtype, without the requirement to use the `{exp:smartdown}` template tag.
 
-The SmartDown config settings should take the form of an associative array. All 
-of the documented template parameters are supported, the only difference being 
+The SmartDown config settings should take the form of an associative array. All
+of the documented template parameters are supported, the only difference being
 that `TRUE` should be used instead of `yes`, and `FALSE` instead of `no`.
 
     $config['smartdown'] => array(
@@ -241,13 +227,13 @@ that `TRUE` should be used instead of `yes`, and `FALSE` instead of `no`.
 
     return $buffer;
   }
-    
+
 
 
   /* --------------------------------------------------------------
    * PRIVATE METHODS
    * ------------------------------------------------------------ */
-  
+
   /**
    * preg_replace callback function, used to parse EE-encoded code blocks.
    *
@@ -279,24 +265,24 @@ that `TRUE` should be used instead of `yes`, and `FALSE` instead of `no`.
   private function _valid_int($value, $min = NULL, $max = NULL)
   {
     $valid = (is_int($value) OR (is_numeric($value) && intval($value) == $value));
-    
+
     // If no bounds have been set, we're done.
     if ( ! $valid OR (is_null($min) && is_null($max)))
     {
       return $valid;
     }
-    
+
     $min = is_null($min) ? -INF : ($this->_valid_int($min) ? intval($min) : -INF);
     $max = is_null($max) ? INF : ($this->_valid_int($max) ? intval($max) : INF);
-    
+
     $value    = intval($value);
     $real_min = min($min, $max);
     $real_max = max($min, $max);
-    
+
     return $valid && (min(max($value, $real_min), $real_max) === $value);
   }
 
-  
+
 }
 
 
