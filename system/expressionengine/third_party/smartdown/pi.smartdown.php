@@ -159,7 +159,7 @@ class Smartdown {
    *
    * @access  public
    */
-  public function usage()
+  public static function usage()
   {
     ob_start();
 ?>
